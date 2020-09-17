@@ -16,6 +16,11 @@ RUN cd /usr/local/tomcat/webapps \
     && unzip -q geoserver-${GEOSERVER_VERSION}.war -d geoserver \
     && rm geoserver-${GEOSERVER_VERSION}.war \
     && mkdir -p $GEOSERVER_DATA_DIR
+    
+# download the data stuff to TMP so we can copy over later to a mounted share if necessary
+RUN cd /tmp \
+    && wget --no-check-certificate --progress=bar:force:noscroll \
+    https://build.geo-solutions.it/geonode/geoserver/latest/data-${GEOSERVER_VERSION}.zip
 
 VOLUME $GEOSERVER_DATA_DIR
 
